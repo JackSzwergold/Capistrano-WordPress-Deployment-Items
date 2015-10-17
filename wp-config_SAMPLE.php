@@ -14,20 +14,22 @@
  * @package WordPress
  */
 
+// 2014-03-07: Simplifying the variable logic a bit.
+$base_file_path = '/Applications/MAMP/htdocs/WordPressTest';
+$site_url = 'http://localhost:8888/WordPressTest';
+
 // 2013-10-11: Adding logic to get the real Capistrano release path into the config.
-$capistranto_release_file = '/Applications/MAMP/htdocs/WordPressTest/CURRENT_PATH';
+$capistranto_release_file = $base_file_path . '/CURRENT_PATH';
 if (file_exists($capistranto_release_file)) {
-  $capistrano_release_path = trim(file_get_contents($capistranto_release_file));
-}
-else {
-  $capistrano_release_path = '/Applications/MAMP/htdocs/WordPressTest';
+  $base_file_path = trim(file_get_contents($capistranto_release_file));
 }
 
-define('WP_SITEURL', 'http://localhost:8888/WordPressTest');
-define('WP_HOME', 'http://localhost:8888/WordPressTest');
-define('WP_CONTENT_DIR', $capistrano_release_path . '/wp-content');
-define('WP_CONTENT_URL', 'http://localhost:8888/WordPressTest/wp-content');
-define('WP_DEFAULT_THEME', 'twentythirteen');
+// 2014-03-07: Adjusting logic to use '$site_url'.
+define('WP_SITEURL', $site_url);
+define('WP_HOME', $site_url);
+define('WP_CONTENT_DIR', $base_file_path . '/wp-content');
+define('WP_CONTENT_URL', $site_url . '/wp-content');
+# define('WP_DEFAULT_THEME', 'twentyeleven');
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
